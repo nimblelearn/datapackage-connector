@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{4DF76451-A46A-4C0B-BE03-459FAAFA07E6}") = "DataPackage", "DataPackage.mproj", "{D7F78032-B59C-4B13-A1E2-F176995FFCA4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7F78032-B59C-4B13-A1E2-F176995FFCA4}.Debug|x86.ActiveCfg = Debug|x86
+		{D7F78032-B59C-4B13-A1E2-F176995FFCA4}.Debug|x86.Build.0 = Debug|x86
+		{D7F78032-B59C-4B13-A1E2-F176995FFCA4}.Release|x86.ActiveCfg = Release|x86
+		{D7F78032-B59C-4B13-A1E2-F176995FFCA4}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6840B65-90C7-46D2-9F05-BEDD1496EAC3}
+	EndGlobalSection
+EndGlobal
