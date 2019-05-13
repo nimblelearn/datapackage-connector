@@ -2,6 +2,8 @@
 
 A Power BI [Custom Connector](https://docs.microsoft.com/en-us/power-bi/desktop-connector-extensibility#custom-connectors) based on the [Data Package M (datapackage-m)](https://github.com/nimblelearn/datapackage-m) functions. Data Package Connector enables you to load one or more tables from  [Tabular Data Packages](http://frictionlessdata.io/docs/tabular-data-package/) directly into Power BI through the familiar 'Get Data' experience.
 
+Not familiar with Power BI? You can learn about it [here](https://docs.microsoft.com/en-us/power-bi/power-bi-overview).
+
 
 ## What is Frictionless Data?
 
