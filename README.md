@@ -69,7 +69,7 @@ Only data resources that are detected as being tabular (i.e. contain a `table` v
 
 The thumbprint to use when setting up the Data Package Connector as a trusted third-party Connector can be found in the 'thumbprint.txt' file located in the 'distributable' folder.
 
-### Using Data Package Connector as a an Untrusted Power BI Connector (Not Recommended)
+### Using Data Package Connector as an Untrusted Power BI Connector (Not Recommended)
 1. Download the [latest release](https://github.com/nimblelearn/datapackage-connector/releases).
 2. Extract the 'DataPackage.pqx' Power BI extension file from the 'distributable' folder.
 3. Follow [these](https://docs.microsoft.com/en-us/power-bi/desktop-connector-extensibility) instructions on how to use Power BI Custom Connectors with Power BI Desktop.
