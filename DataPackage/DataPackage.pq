@@ -1,4 +1,29 @@
-﻿section DataPackage;
+﻿/*
+MIT License
+
+Copyright (c) 2018-19 Nimble Learn Ltd (http://www.nimblelearn.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+[Version = "1.0.0"]
+section DataPackage;
 
 //
 // Definitions
@@ -22,22 +47,21 @@ DataPackage = [
 
 // Data Source UI publishing description
 DataPackage.Publish = [
-    Beta = true,
-    ButtonText = { Extension.LoadString("ButtonTitle"), Extension.LoadString("Import data from a Data Package (Frictionless Data)") }, // ButtonText controls the 'Get Data' UI button text. The first item in the list defines the name of the button and the second controls the tooltip.
-    LearnMoreUrl = "https://github.com/nimblelearn/datapackage-connector"
-    //SourceImage = DataPackage.Icons,
-    //SourceTypeImage = DataPackage.Icons
+    Beta = false,
+    ButtonText = { Extension.LoadString("ButtonTitle"), Extension.LoadString("ButtonHelp") }, // ButtonText controls the 'Get Data' UI button text. The first item in the list defines the name of the button and the second controls the tooltip.
+    LearnMoreUrl = Extension.LoadString("LearnMoreUrl"),
+    SourceImage = DataPackage.Icons,
+    SourceTypeImage = DataPackage.Icons
 ];
 
 DataPackage.Icons = [
-    Icon16 = { Extension.Contents("DataPackage16.png"), Extension.Contents("DataPackage20.png"), Extension.Contents("DataPackage24.png"), Extension.Contents("DataPackage32.png") },
-    Icon32 = { Extension.Contents("DataPackage32.png"), Extension.Contents("DataPackage40.png"), Extension.Contents("DataPackage48.png"), Extension.Contents("DataPackage64.png") }
+    Icon16 = { Extension.Contents("Frictionless16.png"), Extension.Contents("Frictionless20.png"), Extension.Contents("Frictionless24.png"), Extension.Contents("Frictionless32.png") },
+    Icon32 = { Extension.Contents("Frictionless32.png"), Extension.Contents("Frictionless40.png"), Extension.Contents("Frictionless48.png"), Extension.Contents("Frictionless64.png") }
 ];
 
 //
 // Implementation
 //
-
 // Function definition for loading M modules
 Extension.LoadFunction = (name as text) =>
     let
@@ -50,7 +74,27 @@ Extension.LoadFunction = (name as text) =>
 DataPackage.Tables = Extension.LoadFunction("DataPackageTables.pqm");
 
 [DataSource.Kind="DataPackage", Publish="DataPackage.Publish"]
-shared DataPackage.Load = (
+shared DataPackage.Load = Value.ReplaceType(DataPackage.LoadContents, DataPackage.LoadContentsWithDocumentation);
+
+DataPackage.LoadContentsWithDocumentation = type function (
+    dataPackageIdentifier as (
+                                       type text meta [
+                                           Documentation.FieldCaption = "Data Package Identifier"
+                                           //Documentation.FieldDescription = "A valid Data Package Identifier",
+                                           //Documentation.SampleValues = {"https://datahub.io/core/gdp/datapackage.json"}
+                                       ]
+                                   ),
+    ignoreTableSchemaTypes as (
+                                       type text meta [
+                                           Documentation.FieldCaption = "Ignore Table Schema Types"
+                                           //Documentation.FieldDescription = "Controls whether the Table Schema is applied to the data",
+                                           //Documentation.SampleValues = {false}
+                                       ]
+                                   )
+    )
+    as table;
+
+DataPackage.LoadContents = (
         dataPackageIdentifier as text,  // This can be a remote or local Data Package identifier
         ignoreTableSchemaTypes as text  // Ignore the Table Schema due to there being unhandled field values, types, and/or formatting
     ) as table =>

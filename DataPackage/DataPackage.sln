@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{4DF76451-A46A-4C0B-BE03-459FAAFA07E6}") = "DataPackage", "DataPackage.mproj", "{D7F78032-B59C-4B13-A1E2-F176995FFCA4}"
+Project("{4DF76451-A46A-4C0B-BE03-459FAAFA07E6}") = "DataPackage", "DataPackage.mproj", "{8121F69F-2005-4CD2-845F-26FC46344C99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "distributable", "distributable", "{F20126EF-EFFB-4959-ABC5-0CFDA60E982B}"
+	ProjectSection(SolutionItems) = preProject
+		..\distributable-build\NLPBI.pfx = ..\distributable-build\NLPBI.pfx
+		..\distributable\thumbprint.txt = ..\distributable\thumbprint.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +17,10 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D7F78032-B59C-4B13-A1E2-F176995FFCA4}.Debug|x86.ActiveCfg = Debug|x86
-		{D7F78032-B59C-4B13-A1E2-F176995FFCA4}.Debug|x86.Build.0 = Debug|x86
-		{D7F78032-B59C-4B13-A1E2-F176995FFCA4}.Release|x86.ActiveCfg = Release|x86
-		{D7F78032-B59C-4B13-A1E2-F176995FFCA4}.Release|x86.Build.0 = Release|x86
+		{8121F69F-2005-4CD2-845F-26FC46344C99}.Debug|x86.ActiveCfg = Debug|x86
+		{8121F69F-2005-4CD2-845F-26FC46344C99}.Debug|x86.Build.0 = Debug|x86
+		{8121F69F-2005-4CD2-845F-26FC46344C99}.Release|x86.ActiveCfg = Release|x86
+		{8121F69F-2005-4CD2-845F-26FC46344C99}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

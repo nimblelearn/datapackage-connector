@@ -40,30 +40,6 @@
     <Compile Include="DataPackage.pq">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataPackage16.png">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataPackage20.png">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataPackage24.png">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataPackage32.png">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataPackage40.png">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataPackage48.png">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataPackage64.png">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DataPackage80.png">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="resources.resx">
       <SubType>Code</SubType>
     </Compile>
@@ -79,6 +55,33 @@
     <Compile Include="DataPackageTables.pqm">
       <SubType>Content</SubType>
     </Compile>
+    <Compile Include="Frictionless16.png">
+      <SubType>Content</SubType>
+    </Compile>
+    <Compile Include="Frictionless20.png">
+      <SubType>Content</SubType>
+    </Compile>
+    <Compile Include="Frictionless24.png">
+      <SubType>Content</SubType>
+    </Compile>
+    <Compile Include="Frictionless32.png">
+      <SubType>Content</SubType>
+    </Compile>
+    <Compile Include="Frictionless40.png">
+      <SubType>Content</SubType>
+    </Compile>
+    <Compile Include="Frictionless48.png">
+      <SubType>Content</SubType>
+    </Compile>
+    <Compile Include="Frictionless64.png">
+      <SubType>Content</SubType>
+    </Compile>
+    <Compile Include="Frictionless80.png">
+      <SubType>Content</SubType>
+    </Compile>
+    <Content Include="frictionlessLogo.png">
+      <SubType>Content</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="BuildExtension" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">

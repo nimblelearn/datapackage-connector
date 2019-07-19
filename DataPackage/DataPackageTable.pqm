@@ -1,10 +1,40 @@
-﻿(
+﻿/*
+MIT License
+
+Copyright (c) 2018-19 Nimble Learn Ltd (http://www.nimblelearn.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+// Returns a Tabular Data Resource as a table
+let
+    DataPackage.Table = (
         dataPackageIdentifier as text,              // A valid Data Package Identifier
         optional dataResourceIndex as number,       // A valid Data Resource index
         optional dataResourceName as text,          // A valid Data Resource name
         optional ignoreTableSchemaTypes as logical  // Controls whether the Table Schema is applied to the data
     ) as table =>
     let
+        //
+        // Start of connector adaptation **DO NOT OVERWRITE**
+        //
+
         // Function definition for loading M modules
         Extension.LoadFunction = (name as text) =>
         let
@@ -14,8 +44,12 @@
             Expression.Evaluate(asText, #shared),
         // Loading Helper function
         DataPackage.Helper = Extension.LoadFunction("DataPackageHelper.pqm"),
+
+        //
+        // End of connector adaptation **DO NOT OVERWRITE**
+        //
+        
         // Set up local references for shared functions
-        //DataPackage.Helper = DataPackageHelper,
         DataPackage.Package = DataPackage.Helper("DataPackage.Package"),
         DataPackage.Resource = DataPackage.Helper("DataPackage.Resource"),
         DataPackage.ConvertFieldType = DataPackage.Helper("DataPackage.ConvertFieldType"),
@@ -110,4 +144,56 @@
                       else 
                         Record.ToTable(try error "A valid Data Resource name or index was not provided.")      
     in
-        DataTable
+        DataTable,
+
+    // Add documentation
+    DataPackage.TableWithDocumentation = type function (
+                                   dataPackageIdentifier as (
+                                       type text meta [
+                                           Documentation.FieldCaption = "Data Package Identifier",
+                                           Documentation.FieldDescription = "A valid Data Package Identifier",
+                                           Documentation.SampleValues = {"https://datahub.io/core/gdp/datapackage.json"}
+                                       ]
+                                   ),
+                                   optional dataResourceIndex as (
+                                       type number meta [
+                                           Documentation.FieldCaption = "Data Resource Index",
+                                           Documentation.FieldDescription = "A valid Data Resource index",
+                                           Documentation.SampleValues = {0}
+                                       ]
+                                   ),
+                                   optional dataResourceName as (
+                                       type text meta [
+                                           Documentation.FieldCaption = "Data Resource Name",
+                                           Documentation.FieldDescription = "A valid Data Resource name",
+                                           Documentation.SampleValues = {"gdp"}
+                                       ]
+                                   ),
+                                   optional ignoreTableSchemaTypes as (
+                                       type logical meta [
+                                           Documentation.FieldCaption = "Ignore Table Schema Types",
+                                           Documentation.FieldDescription = "Controls whether the Table Schema is applied to the data",
+                                           Documentation.SampleValues = {false}
+                                       ]
+                                   )
+                               ) as table meta [
+                                   Documentation.Name = "DataPackage.Table",
+                                   Documentation.LongDescription = "Returns a Tabular Data Resource as a <code>table</code>.
+                                                                   <br><br>Example:
+                                                                   <br>
+                                                                   <br>
+                                                                   <code>let
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;// Setup the shared function reference
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;DataPackage.Table = DataPackageTable,
+                                                                   <br>
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;// Invoke the function
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;Source = DataPackage.Table(""https://datahub.io/core/gdp/datapackage.json"", null, ""gdp"")
+                                                                   <br>in
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;Source</code>
+                                                                   <br>
+                                                                   <br>
+                                                                   More documentation available at: https://github.com/nimblelearn/datapackage-m",                                   
+                                   Documentation.Examples = null
+                               ]
+in
+    Value.ReplaceType(DataPackage.Table, DataPackage.TableWithDocumentation)

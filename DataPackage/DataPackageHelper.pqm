@@ -1,4 +1,30 @@
-﻿(functionName as text) as function =>
+﻿/*
+MIT License
+
+Copyright (c) 2018-19 Nimble Learn Ltd (http://www.nimblelearn.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+// A function that returns a Data Package helper function 
+let
+    DataPackage.Helper = (functionName as text) as function =>
     let
         /*
         Resolve a Data Package Identifier and return the Data Package metadata as a record along with some inferred helper properties. 
@@ -250,12 +276,39 @@
                             "," 
                         else 
                             dataResource[delimiter]?,
-        
+            
+            // Mapping common encodings to their corresponding code page identifiers. The mappings were sourced from: https://docs.microsoft.com/en-us/windows/desktop/intl/code-page-identifiers.
+            CodePageIdentifiers = [
+                                      #"gb2312" = 936,        // ANSI/OEM Simplified Chinese (PRC, Singapore); Chinese Simplified (GB2312)
+                                      #"x-cp20949" = 20949,   // Korean Wansung
+                                      #"euc-jp" = 20932,      // Japanese (JIS 0208-1990 and 0212-1990)
+                                      #"iso-8859-1" = 28591,  // ISO 8859-1 Latin 1; Western European (ISO)
+                                      #"iso-8859-2" = 28592,  // ISO 8859-2 Central European; Central European (ISO)
+                                      #"iso-8859-3" = 28593,  // ISO 8859-3 Latin 3
+                                      #"iso-8859-4" = 28594,  // ISO 8859-4 Baltic
+                                      #"iso-8859-5" = 28595,  // ISO 8859-5 Cyrillic
+                                      #"iso-8859-6" = 28596,  // ISO 8859-6 Arabic
+                                      #"iso-8859-7" = 28597,  // ISO 8859-7 Greek
+                                      #"iso-8859-8" = 28598,  // ISO 8859-8 Hebrew; Hebrew (ISO-Visual)
+                                      #"iso-8859-9" = 28599,  // ISO 8859-9 Turkish
+                                      #"iso-8859-13" = 28603, // ISO 8859-13 Estonian
+                                      #"iso-8859-15" = 28605, // ISO 8859-15 Latin 9
+                                      #"us-ascii" = 20127,    // US-ASCII (7-bit)
+                                      #"utf-32be" = 12001,    // Unicode UTF-32, big endian byte order; available only to managed applications
+                                      #"utf-32" = 12000,      // Unicode UTF-32, little endian byte order; available only to managed applications
+                                      #"utf-16" = 1200,       // Unicode UTF-16, little endian byte order (BMP of ISO 10646); available only to managed applications
+                                      #"utf-8" = 65001,       // Unicode (UTF-8)
+                                      #"utf-7" = 65000,       // Unicode (UTF-7)
+                                      #"windows-1252"= 1252   // ANSI Latin 1; Western European (Windows)
+                                  ], 
             Encoding = if dataResource[encoding]? = null then 
-                           65001 // UTF-8
+                           65001 // UTF-8 encoding is used when this property is missing
                        else
-                           // TODO: Needs mapping from valid codes (http://www.iana.org/assignments/character-sets/character-sets.xhtml) to M equivalents. This property is currently ignored and UTF-8 is always used.
-                           65001 /*dataResource[encoding]?*/,
+                           // Look-up the corresponding code page identifier
+                           Record.Field(
+                               CodePageIdentifiers,
+                               Text.Lower(Text.From(dataResource[encoding]?))
+                           ),
         
             DocumentOptions = [
                                   Delimiter = Delimiter, 
@@ -374,4 +427,37 @@
         // Return the requested helper function
         HelperFunction = Record.Field(HelperFunctions, functionName)
     in
-        HelperFunction
+        HelperFunction,
+    // Add documentation
+    DataPackage.HelperWithDocumentation = type function (
+                                   functionName as (
+                                       type text meta [
+                                           Documentation.FieldCaption = "Function Name",
+                                           Documentation.FieldDescription = "A valid Data Package helper function name",
+                                           Documentation.SampleValues = {"DataPackage.Package"}
+                                       ]
+                                   )
+                               ) as function meta [
+                                   Documentation.Name = "DataPackage.Helper",
+                                   Documentation.LongDescription = "Returns a Data Package helper function as a <code>function</code>.
+                                                                   <br><br>Example:
+                                                                   <br>
+                                                                   <br>
+                                                                   <code>let
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;// Setup the shared function reference
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;DataPackage.Helper = DataPackageHelper,
+                                                                   <br>
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;// Get the required helper function by name
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;DataPackage.Package = DataPackage.Helper(""DataPackage.Package""),
+                                                                   <br>
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;// Invoke the helper function
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;Source = DataPackage.Package(""https://datahub.io/core/gdp/datapackage.json"")
+                                                                   <br>in
+                                                                   <br>&nbsp;&nbsp;&nbsp;&nbsp;Source</code>
+                                                                   <br>
+                                                                   <br>
+                                                                   More documentation available at: https://github.com/nimblelearn/datapackage-m",                                   
+                                   Documentation.Examples = null
+                               ]
+in
+    Value.ReplaceType(DataPackage.Helper, DataPackage.HelperWithDocumentation)

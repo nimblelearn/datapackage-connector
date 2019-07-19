@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2018 Nimble Learn Ltd (http://www.nimblelearn.com)
+Copyright (c) 2018-19 Nimble Learn Ltd (http://www.nimblelearn.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,11 @@ let
         dataPackageIdentifier as text,              // This can be a remote or local Data Package identifier
         optional ignoreTableSchemaTypes as logical  // Ignore the Table Schema due to there being unhandled field values, types, and/or formatting
     ) as table =>
-    let     
+    let    
+        //
+        // Start of connector adaptation **DO NOT OVERWRITE**
+        //
+
         // Function definition for loading M modules
         Extension.LoadFunction = (name as text) =>
         let
@@ -40,6 +44,11 @@ let
         // Set up local references for shared functions
         DataPackage.Table = Extension.LoadFunction("DataPackageTable.pqm"),
         DataPackage.Helper = Extension.LoadFunction("DataPackageHelper.pqm"),
+
+        //
+        // End of connector adaptation **DO NOT OVERWRITE**
+        //
+
         DataPackage.Package = DataPackage.Helper("DataPackage.Package"),
         DataPackage.Resource = DataPackage.Helper("DataPackage.Resource"),
         

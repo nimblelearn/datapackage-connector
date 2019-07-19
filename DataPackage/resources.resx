@@ -121,9 +121,12 @@
     <value>Import data from a Data Package (Frictionless Data)</value>
   </data>
   <data name="ButtonTitle" xml:space="preserve">
-    <value>Data Package</value>
+    <value>Data Package (Frictionless Data)</value>
   </data>
   <data name="DataSourceLabel" xml:space="preserve">
     <value>Data Package Connector</value>
+  </data>
+  <data name="LearnMoreUrl" xml:space="preserve">
+    <value>https://github.com/nimblelearn/datapackage-connector</value>
   </data>
 </root>

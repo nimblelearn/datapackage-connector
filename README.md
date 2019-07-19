@@ -26,7 +26,7 @@ Visit [https://frictionlessdata.io](https://frictionlessdata.io) to learn more.
 *Easily load Data Packages through the 'Get Data' UI*
 
 ![Microsoft Power BI UI: Resource Navigation](./images/power-bi/datapackage-connector-power-bi-illustration-02.png)  
-*Data Package Connector is stable but it's still under development*  
+*Data Package Connector is a stable third-party connector*  
 
 ![Microsoft Power BI UI: GDP Tabular Data Package Resource Data](./images/power-bi/datapackage-connector-power-bi-illustration-03.png)  
 *Specify a valid Data Package identifier and whether to respect the Table Schema*
@@ -35,14 +35,17 @@ Visit [https://frictionlessdata.io](https://frictionlessdata.io) to learn more.
 *Connects using anonymous authentication*
 
 ![Microsoft Power BI UI: GDP Tabular Data Package Visualisation](./images/power-bi/datapackage-connector-power-bi-illustration-05.png)  
-*Select the tables (i.e. Data Resources) that you want to load/edit and the rest is history*
+*Select the tables that you want to load/edit and the rest is history*
+
+![Microsoft Power BI UI: GDP Tabular Data Package Data Refresh](./images/power-bi/datapackage-connector-power-bi-illustration-06.png)  
+*Full support for on demand and scheduled data refresh in the Power BI service (requires a Data Gateway)*
 
 
 ## Data Package Connector Functions
 
 | Function Name      | Description                                                                 |
 | :----------------- | :-------------------------------------------------------------------------- |
-| DataPackage.Load   | Returns a Navigation Table (i.e. `table`) that lists the [Data Resources](https://frictionlessdata.io/specs/data-resource/) contained within a Data Package. This function wraps DataPackage.Tables but expects the `ignoreTableSchemaTypes` parameter to be a `text` representation of a logical instead of an actual `logical` value. The `text` value is casted to a `logical` value before calling DataPackage.Tables. See [Data Package M (datapackage-m)](https://github.com/nimblelearn/datapackage-m) to learn more about DataPackage.Tables function.|
+| DataPackage.Load   | Returns a Navigation Table (i.e. `table`) that lists the [Data Resources](https://frictionlessdata.io/specs/data-resource/) contained within a Data Package. This function wraps DataPackage.Tables but expects the `ignoreTableSchemaTypes` parameter to be a `text` representation of a logical value instead of an actual `logical` value. The `text` value is casted to a `logical` value before calling DataPackage.Tables. See [Data Package M (datapackage-m)](https://github.com/nimblelearn/datapackage-m) to learn more about the DataPackage.Tables function.|
 
 
 ### DataPackage.Load
@@ -57,10 +60,21 @@ Only data resources that are detected as being tabular (i.e. contain a `table` v
 
 ## Setup
 
-1. Download the [latest release](https://github.com/nimblelearn/datapackage-connector/releases) release.
-2. Extract the 'DataPackage.mez' Power BI extension file from the 'distributable' folder.
+### Using Data Package Connector as a Trusted Third-Party Power BI Connector (Recommended)
+1. Download the [latest release](https://github.com/nimblelearn/datapackage-connector/releases).
+2. Extract the 'DataPackage.pqx' Power BI extension file from the 'distributable' folder.
 3. Follow [these](https://docs.microsoft.com/en-us/power-bi/desktop-connector-extensibility) instructions on how to use Power BI Custom Connectors with Power BI Desktop.
-4. Follow [these ](https://docs.microsoft.com/en-us/power-bi/service-gateway-custom-connectors) instructions on how to use Power BI Custom Connectors with the Power BI On-premises Data Gateway.
+4. Follow [these](https://docs.microsoft.com/en-gb/power-bi/desktop-trusted-third-party-connectors) instructions on how to trust a third-party connector.
+5. Follow [these](https://docs.microsoft.com/en-us/power-bi/service-gateway-custom-connectors) instructions on how to use Power BI Custom Connectors with the Power BI On-premises Data Gateway.
+
+The thumbprint to use when setting up the Data Package Connector as a trusted third-party Connector can be found in the 'thumbprint.txt' file located in the 'distributable' folder.
+
+### Using Data Package Connector as a an Untrusted Power BI Connector (Not Recommended)
+1. Download the [latest release](https://github.com/nimblelearn/datapackage-connector/releases).
+2. Extract the 'DataPackage.pqx' Power BI extension file from the 'distributable' folder.
+3. Follow [these](https://docs.microsoft.com/en-us/power-bi/desktop-connector-extensibility) instructions on how to use Power BI Custom Connectors with Power BI Desktop.
+4. Follow [these](https://docs.microsoft.com/en-us/power-bi/service-gateway-custom-connectors) instructions on how to use Power BI Custom Connectors with the Power BI On-premises Data Gateway.
+
 
 
 ## Try Data Package Connector with the Core Datasets
