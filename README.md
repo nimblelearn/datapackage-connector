@@ -2,18 +2,14 @@
 
 A Power BI [Custom Connector](https://docs.microsoft.com/en-us/power-bi/desktop-connector-extensibility#custom-connectors) based on the [Data Package M (datapackage-m)](https://github.com/nimblelearn/datapackage-m) functions. Data Package Connector enables you to load one or more tables from  [Tabular Data Packages](http://frictionlessdata.io/docs/tabular-data-package/) directly into Power BI through the familiar 'Get Data' experience.
 
-Not familiar with Power BI? You can learn about it [here](https://docs.microsoft.com/en-us/power-bi/power-bi-overview).
+Not heard of Power BI? You can learn about it [here](https://docs.microsoft.com/en-us/power-bi/power-bi-overview).
 
 
 ## What is Frictionless Data?
 
-![Frictionless Data](./images/frictionless-data/frictionless-data-logo-colour.png)
+![Frictionless Data](./images/frictionless-data/frictionless-color-full-logo.svg)
 
 A Tabular Data Package is a simple format for publishing and sharing tabular data. Tabular Data Packages extend and specialise the Data Package specification, and both come under the umbrella of [Frictionless Data](https://frictionlessdata.io/).
-
-Below is the vision statement taken from the Frictionless Data website:
-
->Frictionless Data shortens the path from data to insight with a collection of [specifications](https://frictionlessdata.io/specs/) and [software](https://frictionlessdata.io/software/) for the publication, transport, and consumption of data. At the heart of our approach is a deep understanding of the multi-faceted nature of data work, and an emphasis on platform-agnostic interoperability. From consumer spreadsheet software, through to cloud-based services for data analysis, the future of data is frictionless.
 
 Visit [https://frictionlessdata.io](https://frictionlessdata.io) to learn more.
 
