@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-[Version = "1.0.1"]
+[Version = "1.1.0"]
 section DataPackage;
 
 //
@@ -71,10 +71,16 @@ Extension.LoadFunction = (name as text) =>
         Expression.Evaluate(asText, #shared);
 
 // Load the DataPackage.Tables module
-DataPackage.Tables = Extension.LoadFunction("DataPackageTables.pqm");
+
+shared DataPackage.Helper = Extension.LoadFunction("DataPackageHelper.pqm");
+shared DataPackage.Table = Extension.LoadFunction("DataPackageTable.pqm");
+shared DataPackage.Tables = Extension.LoadFunction("DataPackageTables.pqm");
+
 
 [DataSource.Kind="DataPackage", Publish="DataPackage.Publish"]
 shared DataPackage.Load = Value.ReplaceType(DataPackage.LoadContents, DataPackage.LoadContentsWithDocumentation);
+
+
 
 DataPackage.LoadContentsWithDocumentation = type function (
     dataPackageIdentifier as (
@@ -108,16 +114,17 @@ DataPackage.LoadContents = (
         
         // Rename columns to meet the navigation table requirements
         NavigationReadyDataResources = Table.RenameColumns(
-                                 DataResources,
-                                 {
-                                   {"name", "Name"},
-                                   {"data", "Data"}
-                                 }
-                             ),
+                                           DataResources,
+                                           {
+                                             {"name", "Name"},
+                                             {"data", "Data"}
+                                           }
+                                       ),
         NonNullData = Table.SelectRows(NavigationReadyDataResources, each [Data] <> null and [Data] <> ""),
         TableWithItemKind = Table.AddColumn(NonNullData, "ItemKind", each "Table", Text.Type),
-        TableWithIsLeaf = Table.AddColumn(TableWithItemKind, "IsLeaf", each "True", Text.Type),
-        NavTable = Table.ToNavigationTable(TableWithItemKind, {"Name"}, "Name", "Data", "ItemKind", "ItemKind", "IsLeaf")
+        TableWithItemName = Table.AddColumn(TableWithItemKind, "ItemName", each "Table", Text.Type),
+        TableWithIsLeaf = Table.AddColumn(TableWithItemName, "IsLeaf", each "True", Text.Type),
+        NavTable = Table.ToNavigationTable(TableWithIsLeaf, {"Name"}, "Name", "Data", "ItemKind", "ItemName", "IsLeaf")
     in
         NavTable;
 
